@@ -402,7 +402,16 @@ function remove_scheduler() {
  * @return void
  */
 function get_excerpt( $post, $length = 300 ) {
-	$string = \get_post_field( 'post_content', $post );
+	/**
+ 	 * Filters the post content before requesting the post_content
+     *
+	 * @param WP_Post $post The post object for the post to be shared
+     */
+	$string = apply_filters('bluesky_pre_content', null, $post );
+	if ( ! $string ) {
+		$string = \get_post_field( 'post_content', $post );
+	}
+	
 	$string = \html_entity_decode( $string );
 	$string = \wp_strip_all_tags( $string, true );
 
@@ -411,6 +420,13 @@ function get_excerpt( $post, $length = 300 ) {
 	$length       = $length - strlen( $shortlink );
 	$length       = $length - strlen( $excerpt_more );
 	$length       = $length - 3; // just to be sure
+
+	/**
+ 	 * Filters the post content
+     *
+	 * @param WP_Post $post The post object for the post to be shared
+     */
+	$string = apply_filters('bluesky_content', $string, $post );
 
 	if ( \strlen( $string ) > $length ) {
 		$string = \wordwrap( $string, $length, '</bluesky-summary>' );
