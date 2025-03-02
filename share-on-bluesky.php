@@ -406,6 +406,7 @@ function get_excerpt( $post, $length = 300 ) {
 	 * Filters the post content before requesting the post_content
 	 *
 	 * @param WP_Post $post The post object for the post to be shared
+	 * @param int     $length The length of the excerpt
 	 */
 	$string = apply_filters('bluesky_pre_content', null, $post, $length );
 	if ( $string ) {
@@ -427,8 +428,9 @@ function get_excerpt( $post, $length = 300 ) {
  	 * Filters the post content
      *
 	 * @param WP_Post $post The post object for the post to be shared
+	 * @param int     $length The length of the excerpt
      */
-	$string = apply_filters('bluesky_content', $string, $post );
+	$string = apply_filters('bluesky_content', $string, $post, $length );
 
 	if ( \strlen( $string ) > $length ) {
 		$string = \wordwrap( $string, $length, '</bluesky-summary>' );
