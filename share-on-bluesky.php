@@ -407,10 +407,12 @@ function get_excerpt( $post, $length = 300 ) {
      *
 	 * @param WP_Post $post The post object for the post to be shared
      */
-	$string = apply_filters('bluesky_pre_content', null, $post );
-	if ( ! $string ) {
-		$string = \get_post_field( 'post_content', $post );
+	$string = apply_filters('bluesky_pre_content', null, $post, $length );
+	if ( $string ) {
+		return string;
 	}
+
+	$string = \get_post_field( 'post_content', $post );
 	
 	$string = \html_entity_decode( $string );
 	$string = \wp_strip_all_tags( $string, true );
