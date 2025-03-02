@@ -414,7 +414,6 @@ function get_excerpt( $post, $length = 300 ) {
 	}
 
 	$string = \get_post_field( 'post_content', $post );
-
 	$string = \html_entity_decode( $string );
 	$string = \wp_strip_all_tags( $string, true );
 
